@@ -1,0 +1,106 @@
+<div id="instructions">
+    <h1>CSV To Flashcards (Chrome / Firefox)</h1>
+    <h3>Instructions</h3>
+    <ol>
+        <li>
+            Click on "Upload From CSV" to load a CSV file or load some of the sample data. The CSV File must have columns in the following order with or without the header.
+            <ul>
+                <li>Order</li>
+                <li>Question</li>
+                <li>Answer</li>
+            </ul>
+        </li>
+        <li>
+            Use your browser settings to print the first half of the cards.
+        </li>
+        <li>
+            Feed the cards back into the printer and use your browser settings to print the second half.
+        </li>
+    </ol>
+    <h3>
+    Notes
+    </h3>
+    <ul>
+        <li>
+            The cards will popup in a separate tab. Your browser may prompt you to allow this.
+        </li>
+        <li>
+            Cards are printed so you can easily flip vertically instead of horizontally.
+        </li>
+        <li>
+            The order will be shown in the bottom right corner of each card.
+        </li>
+        <li>
+            The page number will be shown in the bottom right corner of each page.
+        </li>
+    </ul>
+    <br />
+    <div class="row">
+        <div class="col-xs-6 col-xs-offset-3 text-center">
+            <span class="btn btn-primary btn-file btn-block">
+        Upload From CSV
+        <input id="csvFile" type="file" id="style-guide-file" class="form-control" onchange="angular.element(this).scope().uploadFromCsv()" /> &nbsp;
+        <span class="glyphicon glyphicon-upload"></span>
+            </span>
+            <br />
+            <div class="text-center">
+                <strong>OR</strong>
+            </div>
+            <br />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6 col-xs-offset-3 text-center">
+            <button class="btn btn-primary btn-block" ng-click="loadSampleData('countries-capitals.csv')">Load Countries &amp; Capitals</button>
+            <br />
+            <button class="btn btn-primary btn-block" ng-click="loadSampleData('states-capitals.csv')">Load States &amp; Capitals</button>
+            <br />
+            <button class="btn btn-primary btn-block" ng-click="loadSampleData('991-most-common-sat-vocab.csv')">991 Most Common SAT Vocab</button>
+        </div>
+    </div>
+    <br />
+</div>
+<div id="answers">
+    <div ng-repeat="groupedcard in groupedQuestions">
+        <table class="card-table card-table-questions">
+            <tr ng-repeat="card in groupedcard">
+                <td>
+                    <div class="card-container">
+                        <div class="card-title card-long-{{card[0].long"><span ng-bind-html="card[0].title"></span>
+                        </div>
+                        <div class="card-number">{{card[0].number}}</div>
+                    </div>
+                </td>
+                <td>
+                    <div class="card-container">
+                        <div class="card-title card-long-{{card[1].long"><span ng-bind-html="card[1].title"></span>
+                        </div>
+                        <div class="card-number">{{card[1].number}}</div>
+                        <span class="page-number-{{($index+1)%5==0}}">{{$parent.$index+1}}</span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div ng-repeat="groupedcard in groupedAnswers">
+        <table class="card-table card-table-answers">
+            <tr ng-repeat="card in groupedcard">
+                <td>
+                    <div class="card-container">
+                        <div class="card-title card-long-{{card[0].long}} card-length-{{card[0].originalLength}}"><span ng-bind-html="card[0].title"></span>
+                        </div>
+                        <div class="card-number">{{card[0].number}}</div>
+                    </div>
+                </td>
+                <td>
+                    <div class="card-container">
+                        <div class="card-title card-long-{{card[1].long}} card-length-{{card[1].originalLength}}"><span ng-bind-html="card[1].title"></span>
+                        </div>
+                        <div class="card-number">{{card[1].number}}</div>
+                        <span class="page-number-{{($index+1)%5==0}}">{{$parent.$index+1}}</span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

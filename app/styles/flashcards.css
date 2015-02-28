@@ -1,0 +1,58 @@
+body {
+    margin: 0px;
+    padding: 0px;
+    font-family: garamond;
+    font-size: 11pt;
+}
+.card-table {
+    border-collapse: collapse;
+    page-break-after: always;
+    margin: 0px auto;
+}
+.card-table td {
+    border: 1px solid silver;
+    width: 3.75in;
+    height: 1.88in;
+}
+.card-container {
+    padding: 20px;
+}
+.card-table-questions td {
+    vertical-align: middle;
+    text-align: center;
+    font-size: 13pt;
+}
+.card-table-answers td {
+    vertical-align: top;
+    text-align: left;
+}
+.card-title {
+    height: 1.25in;
+    width: 100%;
+}
+.card-table-questions .card-title span {
+    font-weight: bold;
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: 40px;
+}
+.card-long-true {
+    font-size: 9pt;
+}
+.card-number {
+    text-align: right;
+    font-size: 11pt;
+}
+.page-number-true {
+    position: absolute;
+    margin-top: 0px;
+    margin-left: 150px;
+    color: silver;
+    font-size: 10px;
+}
+.card-table-answers .page-number-true {
+    margin-left: 310px;
+}
+.page-number-false {
+    display: none;
+}
