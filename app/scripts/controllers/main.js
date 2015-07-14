@@ -6,7 +6,7 @@ angular.module('csvFlashcardsApp').controller('MainCtrl', function($scope) {
     function groupList(list, reverse) {
         var groupedItems = [];
         var groupedBy20 = _.toArray(_.groupBy(list, function(element, index) {
-            return Math.floor(index / 10);
+            return Math.floor(index / 8);
         }));
         for (var i = 0; i < groupedBy20.length; i++) {
             var groupedBy2 = _.groupBy(groupedBy20[i], function(element, index) {
@@ -21,14 +21,23 @@ angular.module('csvFlashcardsApp').controller('MainCtrl', function($scope) {
         return groupedItems;
     }
 
-    $scope.loadSampleData = function(filename) {
-        $.get('/files/' + filename).done(function(data) {
-            Papa.parse(data, {
-                complete: function(results) {
-                    parseCsv(results.data);
-                }
+    $scope.loadSampleData = function() {
+        var select = document.getElementById('csv-sample');
+        document.getElementById('flashcards-container').style.display = 'none';
+        document.getElementById('print').style.display = 'none';
+        document.getElementById('print-title').style.display = 'none';
+        if (select.value !== '') {
+            document.getElementById('print-progress').style.display = '';
+            document.getElementById('print-title').style.display = '';
+            document.getElementById('print-title').innerHTML = 'Loading ' + select.options[select.selectedIndex].innerHTML + '...';
+            $.get('/files/' + select.value).done(function(data) {
+                Papa.parse(data, {
+                    complete: function(results) {
+                        parseCsv(results.data);
+                    }
+                });
             });
-        });
+        }
     }
 
     function parseCsv(csv) {
@@ -60,7 +69,7 @@ angular.module('csvFlashcardsApp').controller('MainCtrl', function($scope) {
     }
 
     $scope.uploadFromCsv = function() {
-        var file = document.getElementById("csvFile");
+        var file = document.getElementById("style-guide-file");
         Papa.parse(file.files[0], {
             complete: function(results) {
                 parseCsv(results.data);
@@ -69,18 +78,37 @@ angular.module('csvFlashcardsApp').controller('MainCtrl', function($scope) {
     }
 
     $scope.print = function() {
+        // var html = '<!doctype html><html><head><meta charset="utf-8"><style>';
+        // $.get('/styles/flashcards.css').done(function(data) {
+        //     html += data;
+        //     html += '</style>'
+        //     html += $('#answers').html();
+        //     html += '<script>window.print();</script></body></html>';
+        //     var csv = btoa(unescape(encodeURIComponent(html)));
+        //     var w = window.open("data:text/html;base64," + csv, "FlashCards");
+        //     w.focus();
+        //     w.print();
+        // });
+        //setTimeout(function() { //HACK: Not sure when DOM is rendered
+        document.getElementById('print-title').innerText = document.getElementById('print-title').innerText.replace('Loading ', '').replace('...', '');
+        document.getElementById('flashcards-container').style.display = '';
+        document.getElementById('print').style.display = '';
+        document.getElementById('print-progress').style.display = 'none';
+        //}, 5 * $scope.groupedQuestions.length);        
+    }
+
+    $scope.popupPrint = function() {
         var html = '<!doctype html><html><head><meta charset="utf-8"><style>';
-        $.get('/styles/flashcards.css').done(function(data) {
+        $.get('/files/csv-flashcards.css').done(function(data) {
             html += data;
             html += '</style>'
-            html += $('#answers').html();
+            html += $('#flashcards-container').html();
             html += '<script>window.print();</script></body></html>';
             var csv = btoa(unescape(encodeURIComponent(html)));
             var w = window.open("data:text/html;base64," + csv, "FlashCards");
             w.focus();
             w.print();
         });
-
     }
 
     function CustomReplace(strData, strTextToReplace, strReplaceWith, replaceAt) {
@@ -103,7 +131,7 @@ angular.module('csvFlashcardsApp').controller('MainCtrl', function($scope) {
         if (card.title) {
             card.originalLength = card.title.length;
             if (card.title.indexOf(' (') !== -1) {
-                card.title = CustomReplace(card.title, '(', '<br /><br />(', 2);
+                //card.title = CustomReplace(card.title, '(', '<br /><br />(', 2);
             }
             if (card.title.length > 450) {
                 card.long = true;

@@ -1,106 +1,155 @@
+<link href="/styles/flashcards.css" rel="stylesheet">
 <div id="instructions">
-    <h1>CSV To Flashcards (Chrome / Firefox)</h1>
-    <h3>Instructions</h3>
-    <ol>
-        <li>
-            Click on "Upload From CSV" to load a CSV file or load some of the sample data. The CSV File must have columns in the following order with or without the header.
-            <ul>
-                <li>Order</li>
-                <li>Question</li>
-                <li>Answer</li>
-            </ul>
-        </li>
-        <li>
-            Use your browser settings to print the first half of the cards.
-        </li>
-        <li>
-            Feed the cards back into the printer and use your browser settings to print the second half.
-        </li>
-    </ol>
-    <h3>
-    Notes
-    </h3>
-    <ul>
-        <li>
-            The cards will popup in a separate tab. Your browser may prompt you to allow this.
-        </li>
-        <li>
-            Cards are printed so you can easily flip vertically instead of horizontally.
-        </li>
-        <li>
-            The order will be shown in the bottom right corner of each card.
-        </li>
-        <li>
-            The page number will be shown in the bottom right corner of each page.
-        </li>
-    </ul>
-    <br />
-    <div class="row">
-        <div class="col-xs-6 col-xs-offset-3 text-center">
-            <span class="btn btn-primary btn-file btn-block">
-        Upload From CSV
-        <input id="csvFile" type="file" id="style-guide-file" class="form-control" onchange="angular.element(this).scope().uploadFromCsv()" /> &nbsp;
-        <span class="glyphicon glyphicon-upload"></span>
-            </span>
-            <br />
-            <div class="text-center">
-                <strong>OR</strong>
+    <h1>CSV To Flashcards</h1>
+    <div role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+                <a href="#instructions-panel" aria-controls="instructions-panel" role="tab" data-toggle="tab">
+                    <h5>Instructions</h5>
+                </a>
+            </li>
+            <li role="presentation">
+                <a href="#notes-panel" aria-controls="notes-panel" role="tab" data-toggle="tab">
+                    <h5>Notes</h5>
+                </a>
+            </li>
+            <li role="presentation">
+                <a href="#code-panel" aria-controls="code-panel" role="tab" data-toggle="tab">
+                    <h5>Code <i class="fa fa-code"></i></h5>
+                </a>
+            </li>
+        </ul>
+        <br />
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="instructions-panel">
+                <ol>
+                    <li>
+                        Click on "UPLOAD FROM CSV" (formatted according to notes) or select a sample.
+                    </li>
+                    <li>
+                        Click "PRINT" button and use print dialog to print first half of total pages.
+                    </li>
+                    <li>
+                        Feed printed pages back into printer, click "PRINT", and use print dialog to print second half. (See notes)
+                    </li>
+                </ol>
             </div>
-            <br />
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-6 col-xs-offset-3 text-center">
-            <button class="btn btn-primary btn-block" ng-click="loadSampleData('countries-capitals.csv')">Load Countries &amp; Capitals</button>
-            <br />
-            <button class="btn btn-primary btn-block" ng-click="loadSampleData('states-capitals.csv')">Load States &amp; Capitals</button>
-            <br />
-            <button class="btn btn-primary btn-block" ng-click="loadSampleData('991-most-common-sat-vocab.csv')">991 Most Common SAT Vocab</button>
+            <div role="tabpanel" class="tab-pane" id="notes-panel">
+                <ul>
+                    <li>
+                        CSV File must have columns in the following order with or without the header.
+                        <ul>
+                            <li>Order</li>
+                            <li>Question</li>
+                            <li>Answer</li>
+                        </ul>
+                    </li>
+                    <li>
+                        Printing optimized to flip vertically instead of horizontally.
+                    </li>
+                    <li>
+                        Order shown on the bottom right corner of each card.
+                    </li>
+                    <li>
+                        Page number shown on the bottom right corner of each page.
+                    </li>
+                    <li>
+                        Printers have different feeding mechanisms, so you may need to experiment. For my Brother HL-5370DW Printer, feed the pages face up and print side up.
+                    </li>
+                </ul>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="code-panel">
+                <div class="text-center">
+                    <a href="https://github.com/jmlivingston/csv-flashcards-angular" class="btn btn-primary">csv-flashcards-angular <i class="fa fa-github"></i></a>
+                    <br />
+                    <br />
+                    <div>Note: I also have it in Meteor, but just haven't separated it into it's own project. <a href="mailto:support@johnlivingston.io">Ping me</a> if interested.</div>
+                    <!-- <a href="https://github.com/jmlivingston/csv-flashcards-meteor" class="btn btn-primary">csv-flashcards-meteor <i class="fa fa-github"></i></a>-->
+                </div>
+            </div>
         </div>
     </div>
     <br />
-</div>
-<div id="answers">
-    <div ng-repeat="groupedcard in groupedQuestions">
-        <table class="card-table card-table-questions">
-            <tr ng-repeat="card in groupedcard">
-                <td>
-                    <div class="card-container">
-                        <div class="card-title card-long-{{card[0].long"><span ng-bind-html="card[0].title"></span>
-                        </div>
-                        <div class="card-number">{{card[0].number}}</div>
-                    </div>
-                </td>
-                <td>
-                    <div class="card-container">
-                        <div class="card-title card-long-{{card[1].long"><span ng-bind-html="card[1].title"></span>
-                        </div>
-                        <div class="card-number">{{card[1].number}}</div>
-                        <span class="page-number-{{($index+1)%5==0}}">{{$parent.$index+1}}</span>
-                    </div>
-                </td>
-            </tr>
-        </table>
+    <div class="well">
+        <div class="row">
+            <div class="col-xs-6 col-xs-offset-3 text-center">
+                <span class="btn btn-primary btn-file btn-block btn-lg">
+                Upload From CSV
+                <input type="file" id="style-guide-file" class="form-control" onchange="angular.element(this).scope().uploadFromCsv()" />&nbsp;
+                <span class="glyphicon glyphicon-upload"></span>
+                </span>
+                <br />
+                <div class="text-center">
+                    <strong>OR</strong>
+                </div>
+                <br />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 col-xs-offset-3 text-center">
+                <select id="csv-sample" class="form-control input-lg" ng-model="sampleData" ng-change="loadSampleData()">
+                    <option value="">SELECT A SAMPLE</option>
+                    <option value="states-capitals.csv">US States &amp; Capitals</option>
+                    <option value="countries-capitals.csv">Countries &amp; Capitals</option>
+                    <option value="991-most-common-SAT-vocab.csv">Most Common SAT Vocab (991 Total)</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 col-xs-offset-3 text-center">
+                <i id="print-progress" class="fa fa-circle-o-notch fa-3x fa-spin" style="display: none;"></i>
+                <button id="print" class="btn btn-success btn-block btn-lg" onclick="javascript:window.print();" style="display: none;">Print <i class="fa fa-print"></i>
+                </button>
+                <h3 id="print-title" style="display: none;"></h3>
+            </div>
+        </div>
     </div>
-    <div ng-repeat="groupedcard in groupedAnswers">
-        <table class="card-table card-table-answers">
-            <tr ng-repeat="card in groupedcard">
-                <td>
-                    <div class="card-container">
-                        <div class="card-title card-long-{{card[0].long}} card-length-{{card[0].originalLength}}"><span ng-bind-html="card[0].title"></span>
-                        </div>
-                        <div class="card-number">{{card[0].number}}</div>
-                    </div>
-                </td>
-                <td>
-                    <div class="card-container">
-                        <div class="card-title card-long-{{card[1].long}} card-length-{{card[1].originalLength}}"><span ng-bind-html="card[1].title"></span>
-                        </div>
-                        <div class="card-number">{{card[1].number}}</div>
-                        <span class="page-number-{{($index+1)%5==0}}">{{$parent.$index+1}}</span>
-                    </div>
-                </td>
-            </tr>
-        </table>
+</div>
+<div id="flashcards-container">
+    <div id="flashcards">
+        <div id="answers">
+            <div ng-repeat="groupedcard in groupedQuestions">
+                <table class="card-table card-table-questions">
+                    <tr ng-repeat="card in groupedcard">
+                        <td>
+                            <div class="card-container">
+                                <div class="card-title card-long-{{card[0].long"><span ng-bind-html="card[0].title"></span>
+                                </div>
+                                <div class="card-number">{{card[0].number}}</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="card-container">
+                                <div class="card-title card-long-{{card[1].long"><span ng-bind-html="card[1].title"></span>
+                                </div>
+                                <div class="card-number">{{card[1].number}}</div>
+                                <span class="page-number-{{($index+1)%5==0}}">{{$parent.$index+1}}</span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div ng-repeat="groupedcard in groupedAnswers">
+                <table class="card-table card-table-answers">
+                    <tr ng-repeat="card in groupedcard">
+                        <td>
+                            <div class="card-container">
+                                <div class="card-title card-long-{{card[0].long}} card-length-{{card[0].originalLength}}"><span ng-bind-html="card[0].title"></span>
+                                </div>
+                                <div class="card-number">{{card[0].number}}</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="card-container">
+                                <div class="card-title card-long-{{card[1].long}} card-length-{{card[1].originalLength}}"><span ng-bind-html="card[1].title"></span>
+                                </div>
+                                <div class="card-number">{{card[1].number}}</div>
+                                <span class="page-number-{{($index+1)%5==0}}">{{$parent.$index+1}}</span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
